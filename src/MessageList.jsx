@@ -1,19 +1,34 @@
 import React, {Component} from 'react';
+import Message from './Message.jsx';
+
 
 class MessageList extends Component {
-  render() {
-    console.log("Rendering <MessageList/>");
+
+ constructor(props) {
+    super(props);
+    this.displayMessage=this.displayMessage.bind(this);
+
+  }
+
+  displayMessage() {
     return (
-      <div id="message-list">
-        <div className="message">
-          <span className="username">Anonymous1</span>
-          <span className="content">I won't be impressed with technology until I can download food.</span>
-        </div>
-        <div className="message system">
-          Anonymous1 changed their name to nomnom.
-        </div>
+      <div>
+        {this.props.messages.map((currentValue, _index, _array)=> {
+          return (<Message key = {currentValue.id} message= {currentValue} />);
+        })}
       </div>
     );
   }
+
+  render() {
+    console.log("Rendering <MessageList/>");
+
+    return (
+      <div id="message-list">
+        {this.displayMessage()}
+      </div>
+    );
+  }
+
 }
 export default MessageList;
