@@ -7,16 +7,17 @@ class ChatBar extends Component {
     this.state = {value: ""};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
-
   }
 
+// updates state with current value in input field
   handleChange(event) {
     this.setState({value: event.target.value});
   }
 
+  // when user enters message and hits 'Enter' updateMessage is called with current state
   handleSubmit(event) {
     if (event.key === 'Enter') {
-      this.props.changeHandler(this.state.value);
+      this.props.updateMessage(this.state.value);
       event.target.value ="";
     }
   }
@@ -35,6 +36,9 @@ class ChatBar extends Component {
 
 }
 export default ChatBar;
+
+
+
 
 
 

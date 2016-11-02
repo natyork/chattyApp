@@ -7,7 +7,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.newMessage=this.newMessage.bind(this);
+    this.updateMessage=this.updateMessage.bind(this);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
@@ -28,12 +28,18 @@ class App extends Component {
 
   componentDidMount (newMessage) {
     console.log("componentDidMount <App />");
-
   }
 
+  // changeCurrentUser(id){
+  //   let name = this.state.messages.filter()
+  //   this.state.messages.id === id;
+  //   this.setState.currentUser({name: name})
+
+  // }
 
 
-  newMessage (newMessage) {
+// updates state when a new message is entered in the chat bar - function invoked from ChatBar
+  updateMessage (newMessage) {
     let id = this.state.messages.length +1;
     let username = this.state.currentUser.name;
     let content = newMessage;
@@ -56,7 +62,7 @@ class App extends Component {
       <div className="wrapper">
         <Nav />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} changeHandler={this.newMessage}/>
+        <ChatBar currentUser={this.state.currentUser} updateMessage={this.updateMessage}/>
       </div>
     );
   }
