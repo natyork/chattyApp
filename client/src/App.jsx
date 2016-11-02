@@ -7,7 +7,8 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.updateMessage=this.updateMessage.bind(this);
+    this.socket = new WebSocket('ws://localhost:4000');
+    this.updateMessage = this.updateMessage.bind(this);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
@@ -26,20 +27,19 @@ class App extends Component {
 
   }
 
-  componentDidMount (newMessage) {
+  componentDidMount() {
     console.log("componentDidMount <App />");
+
+
+    this.socket.onopen = function () {
+      console.log('Connected to server!');
+    }
   }
 
-  // changeCurrentUser(id){
-  //   let name = this.state.messages.filter()
-  //   this.state.messages.id === id;
-  //   this.setState.currentUser({name: name})
-
-  // }
 
 
 // updates state when a new message is entered in the chat bar - function invoked from ChatBar
-  updateMessage (newMessage) {
+  updateMessage(newMessage) {
     let id = this.state.messages.length +1;
     let username = this.state.currentUser.name;
     let content = newMessage;
@@ -48,10 +48,16 @@ class App extends Component {
       username: username,
       content: content
     };
-    console.log(newMessageObject);
-    let messages =this.state.messages.concat(newMessageObject)
-    this.setState({messages: messages});
-    console.log(this.state);
+
+    this.socket.send(newMessage);
+
+
+
+
+    // let messages =this.state.messages.concat(newMessageObject)
+    // this.setState({messages: messages});
+    // console.log(this.state);
+
   }
 
 
@@ -62,7 +68,7 @@ class App extends Component {
       <div className="wrapper">
         <Nav />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} updateMessage={this.updateMessage}/>
+        <ChatBar currentUser={this.state.currentUser} updateMessage={this.updateMessage} socket={this.socket}/>
       </div>
     );
   }

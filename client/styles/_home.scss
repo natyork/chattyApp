@@ -1,7 +1,7 @@
 html, body {
   max-height: 100vh;
   max-width: 100vw;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .wrapper {
@@ -9,7 +9,9 @@ html, body {
 }
 
 nav {
+  font-family: 'Pacifico', cursive;
   height: 40px;
+  line-height: 40px;
   padding: 8px;
   border-bottom: 1px solid black;
   background-color: $barColour;
