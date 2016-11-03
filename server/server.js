@@ -16,8 +16,8 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+// Send data object to each connected client
 wss.broadcast = function broadcast(data) {
-  console.log('got into broadcast!');
   wss.clients.forEach(function each(client) {
     client.send(JSON.stringify(data));
   });
@@ -32,8 +32,8 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(newCF) {
     let chatFields = JSON.parse(newCF);
     chatFields.id = uuid.v1();
-    console.log(chatFields);
 
+    // Call broadcast with data object
     wss.broadcast({
       type: 'chatFields',
       data: chatFields

@@ -8,7 +8,6 @@ class Message extends Component {
 
   render() {
     console.log("Rendering <Message/>");
-    console.log(this.props.message.username);
 
     return (
 

@@ -23,10 +23,8 @@ class App extends Component {
     }
 
     this.socket.onmessage = (event) => {
-      console.log('in onmessage');
       let data = JSON.parse(event.data).data;
       let messages =this.state.messages.concat(data);
-      console.log("========", this.state.messages, messages);
       this.setState({messages: messages});
       this.setState({currentUser: {name: data.username}});
 
@@ -35,22 +33,8 @@ class App extends Component {
 
 // updates state when a new message is entered in the chat bar - function invoked from ChatBar
   updateChatFields(newCF) {
-    // let username = newCF.username;
-    // let content = newCF.message
-    // let newMessageObject = {
-    //   username: username,
-    //   content: content
-    // };
-
     this.socket.send(JSON.stringify(newCF));
-
   }
-
-  // updateUsername(newUser) {
-  //   console.log('in updateUsername',newUser);
-  //   this.setState({currentUser: {name: newUser}});
-  // }
-
 
   render() {
     console.log("Rendering <App/>");

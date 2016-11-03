@@ -19,12 +19,10 @@ class ChatBar extends Component {
 
     if (id === "new-message") {
       this.setState({content: value});
-      // console.log(this.state.message);
     }
 
     if (id === "username") {
       this.setState({username: value});
-      // console.log(this.state.username);
     }
   }
 
