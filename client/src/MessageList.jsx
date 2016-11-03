@@ -10,10 +10,11 @@ class MessageList extends Component {
   }
 
   displayMessage() {
+    console.log(this.props.messages);
     return (
       <div>
         {this.props.messages.map((currentValue, _index, _array)=> {
-          return (<Message key={currentValue.id} message={currentValue} />);
+          return (<Message key={currentValue.info.id} message={currentValue} />);
         })}
       </div>
     );

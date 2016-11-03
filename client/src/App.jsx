@@ -8,10 +8,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.socket = new WebSocket('ws://localhost:4000');
-    this.updateChatFields = this.updateChatFields.bind(this);
+    this.sendChatFields = this.sendChatFields.bind(this);
     this.state = {
       currentUser: {name: "Bob"},
-      messages: [] // messages coming from the server will be stored here as they arrive
+      messages: [], // store messages coming from the server
+      usersOnline: 1
     };
   }
 
@@ -23,16 +24,30 @@ class App extends Component {
     }
 
     this.socket.onmessage = (event) => {
-      let data = JSON.parse(event.data).data;
-      let messages =this.state.messages.concat(data);
-      this.setState({messages: messages});
-      this.setState({currentUser: {name: data.username}});
+      let broadcast = JSON.parse(event.data);
 
+      if (broadcast.type === 'userCount') {
+        let usersOnline = broadcast.info.usersOnline;
+        this.setState({usersOnline: usersOnline});
+      } else {
+        let messages =this.state.messages.concat(broadcast);
+        this.setState({messages: messages});
+
+        if (broadcast.type === 'incomingMessage') {
+          let name = broadcast.info.username;
+          this.setState({currentUser: {name: name}});
+        }
+
+        if (broadcast.type === 'incomingNotification') {
+         let name = broadcast.info.newUsername;
+         this.setState({currentUser: {name: name}});
+        }
+      }
     }
   }
 
-// updates state when a new message is entered in the chat bar - function invoked from ChatBar
-  updateChatFields(newCF) {
+// send newCF object to the server when function invoked from ChatBar
+  sendChatFields(newCF) {
     this.socket.send(JSON.stringify(newCF));
   }
 
@@ -41,13 +56,13 @@ class App extends Component {
 
     return (
       <div className="wrapper">
-        <Nav />
+        <Nav usersOnline={this.state.usersOnline}/>
         <MessageList
           messages={this.state.messages}
         />
         <ChatBar
           currentUser={this.state.currentUser}
-          updateChatFields={this.updateChatFields}
+          sendChatFields={this.sendChatFields}
         />
       </div>
     );
