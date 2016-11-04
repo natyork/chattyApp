@@ -11,7 +11,8 @@ class App extends Component {
     this.sendChatFields = this.sendChatFields.bind(this);
     this.state = {
       currentUser: {name: "Bob"},
-      messages: [], // store messages coming from the server
+      messages: [{id, user, content, timestamp}], // store messages coming from the server
+      notifications: [{id, content, timestamp}],
       usersOnline: 1
     };
   }

@@ -58,7 +58,7 @@ class ChatBar extends Component {
 
   newNotification() {
     if (this.state.username !== this.props.currentUser.name) {
-      let notification = this.props.currentUser.name+ ' changed their name to ' + this.state.username;
+      let notification = this.props.currentUser.name + ' changed their name to ' + this.state.username;
       let newCF = {
         type: 'postNotification',
         info: {

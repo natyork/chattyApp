@@ -29,6 +29,14 @@ class Message extends Component {
     }
   }
 
+  renderNotification() {
+    return (
+      <div className="message system">
+        {this.props.message.info.notification}
+      </div>
+    );
+  }
+
 
 
   render() {
@@ -36,12 +44,16 @@ class Message extends Component {
 
     return (
       <div>
-      {this.selectContent()}
+        {this.props.message.type === 'incomingNotification' && renderNotification()}
+        {this.props.message.type === 'incomingMessage' && renderMessage()}
       </div>
     );
   }
 
 }
+Message.propTypes = {
+  content: React.PropTypes.string.required // validations
+};
 export default Message;
 
 
