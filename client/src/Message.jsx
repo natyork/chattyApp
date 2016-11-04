@@ -10,7 +10,6 @@ class Message extends Component {
 
   selectContent() {
     if (this.props.message.type === 'incomingNotification'){
-        console.log('=========notif?', this.props.message.type, '=========')
         return (
           <div className="message system">
           {this.props.message.info.notification}
@@ -20,7 +19,6 @@ class Message extends Component {
     }
 
     if (this.props.message.type === 'incomingMessage'){
-      console.log('=========message?', this.props.message.type, '=========')
       return (
         <div className="message">
           <span className="username">{this.props.message.info.username}</span>
